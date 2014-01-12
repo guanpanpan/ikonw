@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	writeToFile()
+	//writeToFile()
 	//analyzeDownUrl()
 
 	//RunMyserver()
