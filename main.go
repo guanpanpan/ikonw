@@ -7,8 +7,8 @@ import (
 
 func main() {
 	//writeToFile()
-	//analyzeDownUrl()
+	analyzeDownUrl()
 
-	//RunMyserver()
+	RunMyserver()
 	fmt.Println("end!")
 }
