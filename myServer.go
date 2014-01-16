@@ -10,5 +10,8 @@ func RunMyserver() {
 	m.Get("/", func() string {
 		return "Hello world!panpanwangjing"
 	})
+	m.Get("/test/**", func() string {
+		return "Hello world!panpanwangjing test"
+	})
 	m.Run()
 }
