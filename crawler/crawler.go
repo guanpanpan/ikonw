@@ -7,10 +7,12 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func WriteToFile() int {
-	saveFile := "d:/cnblog.html"
+
+	saveFile := os.Getenv("WEBPATH") + "/cnblog.html"
 	response, err := http.Get("http://www.cnblogs.com/guanpanpan/") //下划线为空标识符号
 	if err != nil {                                                 //未设置时为nil
 		log.Fatal(err)
@@ -24,6 +26,7 @@ func WriteToFile() int {
 		panic(err1)
 	}
 	defer blogFile.Close()
+	blogFile.WriteString("update for" + time.Now().String() + "<br>")
 	for {
 		n, _ := response.Body.Read(buf)
 		if 0 == n {

@@ -5,10 +5,19 @@ import (
 	"fmt"
 	"ikonw/crawler"
 	"ikonw/myserver"
+	"time"
 )
 
 func main() {
-	crawler.WriteToFile()
+	go func() {
+		for {
+			crawler.WriteToFile()
+			fmt.Println("WriteToFile!%d" + time.Now().String())
+			time.Sleep(time.Minute * 30)
+		}
+
+	}()
+
 	//crawler.AnalyzeDownUrl()
 
 	myserver.RunMyserver()
