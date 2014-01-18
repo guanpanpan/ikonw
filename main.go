@@ -3,11 +3,12 @@ package main
 
 import (
 	"fmt"
+	"ikonw/crawler"
 )
 
 func main() {
 	//writeToFile()
-	analyzeDownUrl()
+	crawler.AnalyzeDownUrl()
 
 	RunMyserver()
 	fmt.Println("end!")
