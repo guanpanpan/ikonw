@@ -1,5 +1,5 @@
 // myServer
-package main
+package myserver
 
 import (
 	"github.com/codegangsta/martini"
