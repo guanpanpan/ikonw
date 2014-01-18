@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	//writeToFile()
-	crawler.AnalyzeDownUrl()
+	crawler.WriteToFile()
+	//crawler.AnalyzeDownUrl()
 
 	myserver.RunMyserver()
 	fmt.Println("end!")

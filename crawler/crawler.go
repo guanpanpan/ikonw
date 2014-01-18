@@ -9,7 +9,8 @@ import (
 	"os"
 )
 
-func writeToFile() int {
+func WriteToFile() int {
+	saveFile := "d:/cnblog.html"
 	response, err := http.Get("http://www.cnblogs.com/guanpanpan/") //下划线为空标识符号
 	if err != nil {                                                 //未设置时为nil
 		log.Fatal(err)
@@ -18,7 +19,7 @@ func writeToFile() int {
 	defer response.Body.Close() //在函数返回时执行
 
 	buf := make([]byte, 1024)
-	blogFile, err1 := os.OpenFile("d:/cnblog.html", os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModePerm)
+	blogFile, err1 := os.OpenFile(saveFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModePerm)
 	if err1 != nil {
 		panic(err1)
 	}
