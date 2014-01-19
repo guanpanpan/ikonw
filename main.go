@@ -9,17 +9,14 @@ import (
 )
 
 func main() {
+
 	go func() {
 		for {
-			crawler.WriteIndexhtml()
-			crawler.WriteToFile()
-			fmt.Println("WriteToFile!%d" + time.Now().String())
+			crawler.Down()
 			time.Sleep(time.Minute * 30)
 		}
 
 	}()
-
-	//crawler.AnalyzeDownUrl()
 
 	myserver.RunMyserver()
 	fmt.Println("end!")
