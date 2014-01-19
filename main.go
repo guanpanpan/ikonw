@@ -11,6 +11,7 @@ import (
 func main() {
 	go func() {
 		for {
+			crawler.WriteIndexhtml()
 			crawler.WriteToFile()
 			fmt.Println("WriteToFile!%d" + time.Now().String())
 			time.Sleep(time.Minute * 30)

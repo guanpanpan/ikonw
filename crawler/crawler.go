@@ -10,8 +10,13 @@ import (
 	"time"
 )
 
+func WriteIndexhtml() {
+	saveFile := os.Getenv("WEBPATH") + "/index.html"
+	blogFile, _ := os.OpenFile(saveFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND|os.O_TRUNC, os.ModePerm)
+	defer blogFile.Close()
+	blogFile.WriteString("<a href='cnblog.html'>cnblog</a><br>")
+}
 func WriteToFile() int {
-
 	saveFile := os.Getenv("WEBPATH") + "/cnblog.html"
 	response, err := http.Get("http://www.cnblogs.com/guanpanpan/") //下划线为空标识符号
 	if err != nil {                                                 //未设置时为nil
@@ -21,7 +26,7 @@ func WriteToFile() int {
 	defer response.Body.Close() //在函数返回时执行
 
 	buf := make([]byte, 1024)
-	blogFile, err1 := os.OpenFile(saveFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, os.ModePerm)
+	blogFile, err1 := os.OpenFile(saveFile, os.O_RDWR|os.O_CREATE|os.O_APPEND|os.O_TRUNC, os.ModePerm)
 	if err1 != nil {
 		panic(err1)
 	}
