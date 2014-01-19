@@ -23,6 +23,7 @@ func WriteIndexhtml(iurls []*iurl) {
 	blogFile, _ := os.OpenFile(saveFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND|os.O_TRUNC, os.ModePerm)
 	defer blogFile.Close()
 	blogFile.WriteString("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>")
+	blogFile.WriteString("update for" + time.Now().String() + "<br>")
 	for i := range iurls {
 		blogFile.WriteString("<a href='" + iurls[i].path + ".html'>" + iurls[i].title + "</a><br>\n")
 	}
