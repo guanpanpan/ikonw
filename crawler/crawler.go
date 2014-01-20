@@ -50,36 +50,60 @@ func getUrlString(url string) string {
 	return string(body)
 }
 
-//分析网址
-func AnalyzeDownUrl() []*iurl {
-	urlStr := getUrlString("http://www.cnblogs.com/guanpanpan/")
+//分析要下载网址
+func AnalyzeDownUrl(s string, path int) []*iurl {
+	urlStr := getUrlString(s)
 	//fmt.Println(urlStr)
+	//\\S所有字符
 	urlRx := regexp.MustCompile("href=\"(\\S*guanpanpan\\S*html)\">(.*)</a>")
 	urls := urlRx.FindAllStringSubmatch(urlStr, 100)
-	str := make([]*iurl, len(urls))
+	//iurls := make([]*iurl, len(urls))
+	//slice
+	iurls := []*iurl{}
 	for i := range urls {
 
 		if le := len(urls[i]); le == 3 {
-			url := iurl{urls[i][1], urls[i][2], fmt.Sprint(i)}
-			str[i] = &url
+			url := iurl{urls[i][1], urls[i][2], fmt.Sprint(path)}
+			//iurls[i] = &url
+			iurls = append(iurls, &url)
 
 		} else if le == 2 {
-			url := iurl{urls[i][1], "empty title", fmt.Sprint(i)}
-			str[i] = &url
+			url := iurl{urls[i][1], "empty title", fmt.Sprint(path)}
+			//iurls[i] = &url
+			iurls = append(iurls, &url)
 		}
-
+		path = path + 1
 	}
 
-	return str
+	nextUrl := AnalyzeNextPage(urlStr)
+	fmt.Println("next:" + nextUrl)
+	if nextUrl != "" {
+		nextDownIurls := AnalyzeDownUrl(nextUrl, path)
+		iurls = append(iurls, nextDownIurls...)
+	}
+	return iurls
+}
+
+//分析关联页面
+func AnalyzeNextPage(s string) string {
+	urlRx := regexp.MustCompile("href=\"(\\S*guanpanpan\\S*html\\S*)\">下一页</a>")
+	urls := urlRx.FindStringSubmatch(s)
+	if len(urls) > 1 {
+		return urls[1]
+	} else {
+		return ""
+	}
+
 }
 func Down() {
 	//分析要下载的url
-	iurls := AnalyzeDownUrl()
+	iurls := AnalyzeDownUrl("http://www.cnblogs.com/guanpanpan/", 1)
 	//写主页
 	WriteIndexhtml(iurls)
 	//下载网页
 	for i := range iurls {
 		iurls[i].WriteToFile()
+		time.Sleep(time.Second * 10)
 	}
 	fmt.Println("WriteToFile!%d" + time.Now().String())
 
